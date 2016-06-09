@@ -38,25 +38,25 @@ class Plotter(object):
             
         for counter, i in enumerate(myproduct):
             
-            print '=========> Processing %d / %d -th efficiency' %(counter, nrounds)
+            print '=========> Processing %d / %d -th efficiency' %(counter+1, nrounds)
 
             variable = i[0]
 
             dens     = [ self.sel_extra_den[j-1      ][i[j]] for j in range(1        , n_den + 1        ) ]
             nums     = [ self.sel_num      [j-1-n_den][i[j]] for j in range(1 + n_den, n_num + 1 + n_den) ]
             
-            cut_den = ''            
+            cut_den = '(%s) *' %self.sel_baseline            
             for j in dens:
                 cut_den += ' (%s) *' %j
             if cut_den.endswith('*'):
                 cut_den = cut_den[:-1] 
             
-            cut_num = ''            
+            cut_num = '(%s) *' %cut_den            
             for j in nums:
                 cut_num += ' (%s) *' %j
             if cut_num.endswith('*'):
                 cut_num = cut_num[:-1] 
-                        
+            
             variable.cut_den = cut_den
             variable.cut_num = cut_num
         
@@ -73,9 +73,7 @@ class Plotter(object):
             if not dirname in [i.GetName() for i in ROOT.gDirectory.GetListOfKeys()]:
                 ROOT.gDirectory.mkdir(dirname)
             ROOT.gDirectory.cd(dirname)
-        
-            eff.Draw()
-            
+                    
             num.Write()
             den.Write()    
             eff.Write()    

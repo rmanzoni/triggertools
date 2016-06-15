@@ -12,6 +12,7 @@ ROOT.TH1.SetDefaultSumw2()
 class Efficiency(object):
     '''
     Base class, virtual, in a way.
+    Still to be thought through...
     '''
     def __init__(self, *args, **kwargs):
         pass
@@ -132,6 +133,9 @@ class Efficiency1D(Efficiency):
 
 
 class Efficiency2D(Efficiency):
+    '''
+    Placeholder for now
+    '''
     pass
 
 

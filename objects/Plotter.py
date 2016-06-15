@@ -73,6 +73,10 @@ class Plotter(object):
             if not dirname in [i.GetName() for i in ROOT.gDirectory.GetListOfKeys()]:
                 ROOT.gDirectory.mkdir(dirname)
             ROOT.gDirectory.cd(dirname)
+            
+            eff.SetMarkerStyle(8)
+            eff.SetDrawOption('AP')
+            eff.GetYaxis().SetRangeUser(0., 1.05)
                     
             num.Write()
             den.Write()    

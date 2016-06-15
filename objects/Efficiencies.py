@@ -60,7 +60,7 @@ class Efficiency1D(Efficiency):
         # self.directory.ls()
         self.tree.Draw('%s >> %s' %(self.variable, self.histo_num.GetName()), '(%s) * (%s)' %(self.cut_num, self.cut_den))
         self.tree.Draw('%s >> %s' %(self.variable, self.histo_den.GetName()), self.cut_den)
-    
+
     def _computeEfficiency(self):
         x   = []
         y   = []
@@ -69,19 +69,22 @@ class Efficiency1D(Efficiency):
         exh = []
         eyh = []
     
-        for bin in range(self.histo_den.GetNbinsX()):
-            
-            mynum = dc(self.histo_num)
-            myden = dc(self.histo_den)
-            
+        mynum = dc(self.histo_num)
+        myden = dc(self.histo_den)
+
+        for bin in range(myden.GetNbinsX()):
+                        
             bin_centre = mynum.GetBinCenter(bin+1)
             binc_num = mynum.GetBinContent(bin+1)
             binc_den = myden.GetBinContent(bin+1)
             
             if binc_num > binc_den:
-                message = ('Efficiency %s  -  cut %s\n'\
+#                 message = ('Efficiency %s  -  cut %s\n'\
+#                            '\t==> In bin centre %.2f numerator has %.2f content LARGER han denominator %.2f content.\n'\
+#                            '\t    Pegging numerator bin equal to denominator\'s' %(self.name, self.cut_den, bin_centre, binc_num, binc_den))
+                message = ('Efficiency %s\n'\
                            '\t==> In bin centre %.2f numerator has %.2f content LARGER han denominator %.2f content.\n'\
-                           '\t    Pegging numerator bin equal to denominator\'s' %(self.name, self.cut_den, bin_centre, binc_num, binc_den))
+                           '\t    Pegging numerator bin equal to denominator\'s' %(self.name, bin_centre, binc_num, binc_den))
                 if self.permissive:
                     warnings.warn(message, Warning)
                 else:

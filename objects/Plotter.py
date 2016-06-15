@@ -51,7 +51,8 @@ class Plotter(object):
             if cut_den.endswith('*'):
                 cut_den = cut_den[:-1] 
             
-            cut_num = '(%s) *' %cut_den            
+            # cut_num = '(%s) *' %cut_den            
+            cut_num = ''            
             for j in nums:
                 cut_num += ' (%s) *' %j
             if cut_num.endswith('*'):

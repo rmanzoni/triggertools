@@ -1,6 +1,11 @@
 import sympy
+import scipy
 import numpy as np
 import scipy.spatial.distance as ds
+# this is nonsense, I know, but scipy imports seem to be broken
+import numpy.linalg
+import numpy.linalg.linalg
+import scipy.linalg
 import matplotlib.pyplot as plt
 
 
@@ -17,10 +22,7 @@ def sampleCovarianceMatrix(pars, cov, ntoys=-1, ci=68., plot=False):
     '''
     # get problem's dimensionality, cov matrix should and must be NxN
     dim = cov.shape[0]
-    
-    # convert the cov matrix to symbolic to make operations easier
-    _cov = sympy.Matrix(cov)
-    
+        
     # fix the random number generator seed for reproducibility
     rng = np.random.RandomState(1986)
 
@@ -31,15 +33,15 @@ def sampleCovarianceMatrix(pars, cov, ntoys=-1, ci=68., plot=False):
     mvg = rng.multivariate_normal(pars, cov, ntoys)
 
     # define transformation matrices 
-    transformMatrix     = _cov**-0.5 
-    transformBackMatrix = _cov**0.5
+    transformMatrix     = (sympy.Matrix(scipy.linalg.matfuncs.funm(cov, np.sqrt)))**-1
+    transformBackMatrix =  sympy.Matrix(scipy.linalg.matfuncs.funm(cov, np.sqrt))
     
     # transform
     _newpoints = []
     
     for point in mvg:
         newpoint = transformMatrix * point
-        _newpoints.append([newpoint[0], newpoint[1]])
+        _newpoints.append([newpoint[i] for i in range(dim)])
     
     newpoints = np.array(_newpoints, dtype=float)
     
@@ -88,20 +90,19 @@ def sampleCovarianceMatrix(pars, cov, ntoys=-1, ci=68., plot=False):
             plt.show()
         else:
             print 'too many dimensions, cannot plot'
-    
-    return savedpoints
+
+    return finalpoints
     
 
 
 if __name__ == '__main__':
     
     pars = np.array([-0.03618131112990319, 0.538770365688826])
-    cov  = np.array([[ 0.00291171,  0.00163387],
-                     [ 0.00163387,  0.00148482]])
+    cov  = np.array([[ 0.00291171,  -0.00163387],
+                     [ -0.00163387,  0.00148482]])
 
 
-    sampled = sampleCovarianceMatrix(pars, cov, ci=68, plot=True)
-#     sampled = sampleCovarianceMatrix(pars, cov, plot=True)
+    sampled = sampleCovarianceMatrix(pars, cov, ci=68., plot=True)
 
 
 

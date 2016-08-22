@@ -28,7 +28,9 @@ relExtraDY = 1.4
 extraOverCmsTextSize  = 0.8
 
 # lumi_13TeV = ""
-lumi_13TeV = "Run 2016, L = 2.1 fb^{-1}"
+lumi_13TeV = "2016"
+# lumi_13TeV = "Run 2016, L = 12.9 fb^{-1}"
+# lumi_13TeV = "Run 2016, L = 2.1 fb^{-1}"
 # lumi_13TeV = "804 pb^{-1}"
 # lumi_13TeV = "2.1 fb^{-1}"
 # lumi_13TeV = "150.2 pb^{-1}" # Run 2015C 3.8T + 0T + VdM scan

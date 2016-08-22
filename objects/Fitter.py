@@ -5,7 +5,7 @@ from copy import deepcopy as dc
 
 ROOT.TH1.SetDefaultSumw2()
 ROOT.gROOT.SetBatch(True)
-
+ROOT.TVirtualFitter.SetMaxIterations(10000)
 
 class Fitter(object):
     '''

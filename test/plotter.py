@@ -28,16 +28,17 @@ baseline = '&'.join([
     ' veto_dilepton == 0 '                         ,
     ' veto_thirdlepton == 0 '                      ,
     ' veto_otherlepton == 0 '                      ,
+    ' trigger_matched_isomu22eta2p1 == 1'          ,
 ])
 
 iso = {
-    'NoIso'      : ' l2_byIsolationMVArun2v1DBoldDMwLT >= 0'      ,
-    'VLooseIso'  : ' l2_byIsolationMVArun2v1DBoldDMwLT >= 1'      ,
-    'LooseIso'   : ' l2_byIsolationMVArun2v1DBoldDMwLT >= 2'      ,
+#     'NoIso'      : ' l2_byIsolationMVArun2v1DBoldDMwLT >= 0'      ,
+#     'VLooseIso'  : ' l2_byIsolationMVArun2v1DBoldDMwLT >= 1'      ,
+#     'LooseIso'   : ' l2_byIsolationMVArun2v1DBoldDMwLT >= 2'      ,
     'MediumIso'  : ' l2_byIsolationMVArun2v1DBoldDMwLT >= 3'      ,
-    'TightIso'   : ' l2_byIsolationMVArun2v1DBoldDMwLT >= 4'      ,
-    'VTightIso'  : ' l2_byIsolationMVArun2v1DBoldDMwLT >= 5'      ,
-    'VVTightIso' : ' l2_byIsolationMVArun2v1DBoldDMwLT >= 6'      ,
+#     'TightIso'   : ' l2_byIsolationMVArun2v1DBoldDMwLT >= 4'      ,
+#     'VTightIso'  : ' l2_byIsolationMVArun2v1DBoldDMwLT >= 5'      ,
+#     'VVTightIso' : ' l2_byIsolationMVArun2v1DBoldDMwLT >= 6'      ,
 }
 
 mt = {
@@ -58,8 +59,8 @@ sign = {
 }
 
 eta_bins = {
-#     'barrel' : ' abs(l2_eta) < 1.444 ',
-#     'endcap' : ' abs(l2_eta) > 1.566 ',
+    'barrel' : ' abs(l2_eta) < 1.444 ',
+    'endcap' : ' abs(l2_eta) > 1.566 ',
     ''       : ' 1 '                  ,
 }
 
@@ -71,15 +72,20 @@ decaymode = {
 }
 
 TriggerSelection = {
-#     'L1'   : ' l2_L1_type == 7 & l2_L1_bx == 0 & l2_L1_iso == 1 & l2_L1_pt > 27.5'                                ,
-#     'L2'   : ' l2_L1_type == 7 & l2_L1_bx == 0 & l2_L1_iso == 1 & l2_L1_pt > 27.5 & l2_hltL2Tau26eta2p2_pt > 0'   ,
-#     'L2p5' : ' l2_L1_type == 7 & l2_L1_bx == 0 & l2_L1_iso == 1 & l2_L1_pt > 27.5 & l2_hltL2IsoTau26eta2p2_pt > 0',
-    'HLT'  : ' l2_L1_type == 7 & l2_L1_bx == 0 & l2_L1_iso == 1 & l2_L1_pt > 27.5 & probe & l2_trig_obj_pt > 35'   ,
+    'L1'   : ' l2_L1_type == 7 & l2_L1_bx == 0 & l2_L1_iso == 1 & l2_L1_pt > 27.5'                                ,
+    'L2'   : ' l2_L1_type == 7 & l2_L1_bx == 0 & l2_L1_iso == 1 & l2_L1_pt > 27.5 & l2_hltL2Tau26eta2p2_pt > 0'   ,
+    'L2p5' : ' l2_L1_type == 7 & l2_L1_bx == 0 & l2_L1_iso == 1 & l2_L1_pt > 27.5 & l2_hltL2IsoTau26eta2p2_pt > 0',
+    'HLT'  : ' l2_L1_type == 7 & l2_L1_bx == 0 & l2_L1_iso == 1 & l2_L1_pt > 27.5 & (trigger_matched_isomu21medisotau32 || trigger_matched_isomu21medcombisotau32) & l2_trig_obj_pt > 35'   ,
 }
 
 filenames = [
-    '../../2016Bv4_HLT_IsoMu19_eta2p1_MediumIsoPFTau32_Trk1_eta2p1_Reg/SingleMuon_Run2016B_PromptReco_v1/H2TauTauTreeProducerTauMu/tree.root',
-    '../../2016Bv4_HLT_IsoMu19_eta2p1_MediumIsoPFTau32_Trk1_eta2p1_Reg/SingleMuon_Run2016B_PromptReco_v2/H2TauTauTreeProducerTauMu/tree.root',    
+    '../../triggerFull2016DCS/SingleMuon_Run2016B_PromptReco_v1/H2TauTauTreeProducerTauMu/tree.root',
+    '../../triggerFull2016DCS/SingleMuon_Run2016B_PromptReco_v2/H2TauTauTreeProducerTauMu/tree.root',
+    '../../triggerFull2016DCS/SingleMuon_Run2016C_PromptReco_v2/H2TauTauTreeProducerTauMu/tree.root',
+    '../../triggerFull2016DCS/SingleMuon_Run2016D_PromptReco_v2/H2TauTauTreeProducerTauMu/tree.root',
+    '../../triggerFull2016DCS/SingleMuon_Run2016E_PromptReco_v2/H2TauTauTreeProducerTauMu/tree.root',
+    '../../triggerFull2016DCS/SingleMuon_Run2016F_PromptReco_v1/H2TauTauTreeProducerTauMu/tree.root',
+    '../../triggerFull2016DCS/SingleMuon_Run2016G_PromptReco_v1/H2TauTauTreeProducerTauMu/tree.root',
 ]
 
 t1 = ROOT.TChain('tree')
@@ -101,7 +107,7 @@ variables = [
 ]
 
 HLTPlotter = Plotter(variables     = variables                         , 
-                     out_filename  = 'diTau_plots_good.root'     , 
+                     out_filename  = 'mediumiso_plots.root'     , 
                      sel_baseline  = baseline                          , 
                      sel_extra_den = [ eta_bins, mt, zmass, sign, iso ], 
                      sel_num       = [ TriggerSelection ]              )

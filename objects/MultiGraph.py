@@ -17,6 +17,9 @@ class MultiGraph(ROOT.TMultiGraph):
         if 'graphs' not in kwargs.keys():
             raise
 
+        if 'legendPosition' not in kwargs.keys():
+            raise
+
         if 'json' in kwargs.keys():
             self.json = kwargs['json']
         else:
@@ -31,11 +34,16 @@ class MultiGraph(ROOT.TMultiGraph):
             graph.graph = file.Get(graph.graphname)
             graph.graph.SetMarkerColor(graph.colour)
 
+        self.legpos = kwargs['legendPosition']
+
                 
     def Fill(self):
 
-        self.leg = ROOT.TLegend( 0.5, 0.3, 0.88, 0.6 )
-        #self.leg = ROOT.TLegend( 0.35, 0.73, 0.88, 0.88 )
+        if self.legpos == 0: self.leg = ROOT.TLegend( 0.5, 0.3, 0.88, 0.6 )
+        if self.legpos == 1: self.leg = ROOT.TLegend( 0.35, 0.73, 0.88, 0.88 )
+        if self.legpos == 2: self.leg = ROOT.TLegend( 0.4, 0.25, 0.88, 0.7 )
+        if self.legpos == 3: self.leg = ROOT.TLegend( 0.5, 0.7, 0.88, 0.88 )
+        if self.legpos == 4: self.leg = ROOT.TLegend( 0.4, 0.16, 0.88, 0.55 )
         self.leg.SetTextSize(0.027)
         self.leg.SetFillColor(ROOT.kWhite)
         self.leg.SetLineColor(ROOT.kWhite)
@@ -69,8 +77,8 @@ class MultiGraph(ROOT.TMultiGraph):
     def returnRatios(self):
         '''
         '''
-        references = [graph for graph in self.graphs if graph.reference]
-        others     = [graph for graph in self.graphs if not graph.reference]
+        references = [graph for graph in self.graphs if graph.reference == 1]
+        others     = [graph for graph in self.graphs if graph.reference == 0]
         
         if len(references)>1:
             print 'ERROR! more than one reference, returning None'

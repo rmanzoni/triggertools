@@ -90,13 +90,14 @@ func.SetParName(4, 'norm' )
 
 
 
-file_data  = '../test/mediumiso_plots.root'
-file_mc    = '../test/mediumiso_plots_mc.root'
-# file_mc_v2 = '../test/mediumiso_plots_mc_only_nlo.root'
+file_data  = '../test/mediumiso_plots_v2.root'
+# file_mc    = '../test/mediumiso_plots_mc.root'
+file_mc    = '../test/mediumiso_plots_mc_only_nlo.root'
 
 graphs = [
     GraphContainer(file=file_data, graphname='lowmt_zmass_sub_MediumIso_HLT/tau_pt' , function=func, colour=ROOT.kBlack, legend='data 2016BCDEFG', legendOpt='EP', reference=False),
-    GraphContainer(file=file_mc  , graphname='lowmt_zmass_sub_MediumIso_HLT/tau_pt' , function=func, colour=ROOT.kRed  , legend='reHLT DY MC NLO', legendOpt='EP', reference=True),
+#     GraphContainer(file=file_mc  , graphname='lowmt_zmass_sub_MediumIso_HLT/tau_pt' , function=func, colour=ROOT.kRed  , legend='reHLT DY MC NLO', legendOpt='EP', reference=True),
+    GraphContainer(file=file_mc  , graphname='previous_level_none_lowmt_zmass_sub_MediumIso_HLT/tau_pt' , function=func, colour=ROOT.kRed  , legend='reHLT DY MC NLO', legendOpt='EP', reference=True),
 ]
 
 

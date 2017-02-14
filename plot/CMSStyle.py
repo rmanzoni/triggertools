@@ -28,7 +28,12 @@ relExtraDY = 1.4
 extraOverCmsTextSize  = 0.8
 
 # lumi_13TeV = ""
-lumi_13TeV = "2016"
+# lumi_13TeV = "2016"
+lumi_13TeV = "Run 2016"
+# lumi_13TeV = "Run 2016, L = 37.0 fb^{-1}"
+# lumi_13TeV = "Run 2016, L = 27.8 fb^{-1}"
+# lumi_13TeV = "Run 2016, L = 15.4 fb^{-1}"
+
 # lumi_13TeV = "Run 2016, L = 12.9 fb^{-1}"
 # lumi_13TeV = "Run 2016, L = 2.1 fb^{-1}"
 # lumi_13TeV = "804 pb^{-1}"

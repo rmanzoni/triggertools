@@ -46,7 +46,7 @@ def doubleSidedCrystalball(x, par):
     n2     = par[6]
     
     # impose continuity by joining the two halves at the gauss peak. 
-    # Derivability comes for free. Thanks Carl Friedrich!
+    # Derivability comes for free. Thanks Karl Friedrich!
     scale2 = _crystalball(mu, alpha1, n1, mu, sigma, scale1) / _crystalball(mu, alpha2, n2, mu, sigma, 1.)
 
     if x > mu:
@@ -73,6 +73,39 @@ def crystalballEfficiency(x, par):
     n     = par[3]
     norm  = par[4]
     return _crystalballEfficiency( x, m0, sigma, alpha, n, norm )
+
+
+def doubleCrystalballErrfEfficiency(x, par):
+    x     = x[0]
+    m0_1    = par[0]
+    sigma_1 = par[1]
+    alpha_1 = par[2]
+    n_1     = par[3]
+    norm_1  = par[4]
+    m0_2    = par[5]
+    sigma_2 = par[6]
+    alpha_2 = par[7]
+    n_2     = par[8]
+    norm_2  = par[9]
+    return _crystalballEfficiency( x, m0_1, sigma_1, alpha_1, n_1, norm_1 ) + \
+           _crystalballEfficiency( x, m0_2, sigma_2, alpha_2, n_2, norm_2 )
+
+
+def crystalballEfficiencyWithRelaxation(x, par):
+    '''
+    Convolution of a CrystalBall resolution function with a step function
+    plus the addition of a linear relaxation term
+    '''
+    x      = x[0]
+    m0     = par[0]
+    sigma  = par[1]
+    alpha  = par[2]
+    n      = par[3]
+    norm   = par[4]
+    relax  = par[5]
+    slope  = par[6]
+    floating_norm = norm * (1. + slope * max(0., x - relax))
+    return _crystalballEfficiency( x, m0, sigma, alpha, n, floating_norm )
 
 
 def _doubleGauss(x, mu1, sigma1, scale1, mu2, sigma2, scale2):

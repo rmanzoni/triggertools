@@ -105,19 +105,19 @@ TriggerSelection = {
 }
 
 filenames = [
-    '../../triggerFull2016DCSv5/SingleMuon_Run2016B_PromptReco_v1/H2TauTauTreeProducerTauMu/tree.root',
-    '../../triggerFull2016DCSv5/SingleMuon_Run2016B_PromptReco_v2/H2TauTauTreeProducerTauMu/tree.root',
-    '../../triggerFull2016DCSv5/SingleMuon_Run2016C_PromptReco_v2/H2TauTauTreeProducerTauMu/tree.root',
-    '../../triggerFull2016DCSv5/SingleMuon_Run2016D_PromptReco_v2/H2TauTauTreeProducerTauMu/tree.root',
-    '../../triggerFull2016DCSv5/SingleMuon_Run2016E_PromptReco_v2/H2TauTauTreeProducerTauMu/tree.root',
-    '../../triggerFull2016DCSv5/SingleMuon_Run2016F_PromptReco_v1/H2TauTauTreeProducerTauMu/tree.root',
-    '../../triggerFull2016DCSv5/SingleMuon_Run2016G_PromptReco_v1/H2TauTauTreeProducerTauMu/tree.root',
+    '../../rereco23septBCDEFGpromptH_already_done/SingleMuon_Run2016B_23Sep2016/H2TauTauTreeProducerTauMu/tree.root.url',
+    '../../rereco23septBCDEFGpromptH_already_done/SingleMuon_Run2016C_23Sep2016/H2TauTauTreeProducerTauMu/tree.root.url',
 ]
 
 t1 = ROOT.TChain('tree')
 
 for fname in filenames:
+    if fname.endswith('.url'):
+        with open(fname) as ff:
+            fname = ff.readlines()[0].rstrip()
     t1.Add(fname)
+
+import pdb ; pdb.set_trace()
 
 nbins   = 40
 bins    = [0., 10., 20., 25., 30., 32.5, 35., 37.5, 40., 42.5, 45., 50., 55., 60., 70., 90., 120., 200., 500., 1000.]

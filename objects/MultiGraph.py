@@ -29,6 +29,7 @@ class MultiGraph(ROOT.TMultiGraph):
         self.graphse = []
 
         for graph in self.graphs:
+            print 'fetching %s from %s' %(graph.graphname, graph.file)
             file = ROOT.TFile.Open(graph.file, 'read')
             file.cd()
             graph.graph = file.Get(graph.graphname)
@@ -39,14 +40,17 @@ class MultiGraph(ROOT.TMultiGraph):
                 
     def Fill(self):
 
-        if self.legpos == 0: self.leg = ROOT.TLegend( 0.5, 0.3, 0.88, 0.6 )
-        if self.legpos == 1: self.leg = ROOT.TLegend( 0.35, 0.73, 0.88, 0.88 )
-        if self.legpos == 2: self.leg = ROOT.TLegend( 0.4, 0.25, 0.88, 0.7 )
-        if self.legpos == 3: self.leg = ROOT.TLegend( 0.5, 0.7, 0.88, 0.88 )
-        if self.legpos == 4: self.leg = ROOT.TLegend( 0.4, 0.16, 0.88, 0.35 )
-        if self.legpos == 5: self.leg = ROOT.TLegend( 0.4, 0.16, 0.88, 0.5 )
-        if self.legpos == 6: self.leg = ROOT.TLegend( 0.25, 0.16, 0.88, 0.5 )
-        if self.legpos == 7: self.leg = ROOT.TLegend( 0.6, 0.2, 0.88, 0.3  )
+        if self.legpos ==  0: self.leg = ROOT.TLegend( 0.5, 0.3, 0.88, 0.6 )
+        if self.legpos ==  1: self.leg = ROOT.TLegend( 0.35, 0.73, 0.88, 0.88 )
+        if self.legpos ==  2: self.leg = ROOT.TLegend( 0.4, 0.25, 0.88, 0.7 )
+        if self.legpos ==  3: self.leg = ROOT.TLegend( 0.5, 0.7, 0.88, 0.88 )
+        if self.legpos ==  4: self.leg = ROOT.TLegend( 0.4, 0.16, 0.88, 0.35 )
+        if self.legpos ==  5: self.leg = ROOT.TLegend( 0.4, 0.16, 0.88, 0.5 )
+        if self.legpos ==  6: self.leg = ROOT.TLegend( 0.25, 0.16, 0.88, 0.5 )
+        if self.legpos ==  7: self.leg = ROOT.TLegend( 0.6, 0.2, 0.88, 0.3  )
+        if self.legpos ==  8: self.leg = ROOT.TLegend( 0.3, 0.16, 0.88, 0.35 )
+        if self.legpos ==  9: self.leg = ROOT.TLegend( 0.3, 0.16, 0.88, 0.5 )
+        if self.legpos == 10: self.leg = ROOT.TLegend( 0.22, 0.16, 0.88, 0.35 )
         self.leg.SetTextSize(0.027)
         self.leg.SetFillColor(ROOT.kWhite)
         self.leg.SetLineColor(ROOT.kWhite)

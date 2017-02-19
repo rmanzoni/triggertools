@@ -5,6 +5,8 @@ import ROOT
 import numpy as np
 from array import array
 from objects.Fitter import Fitter
+from objects.FuncRatio import FuncRatio
+from copy import deepcopy as dc
 
 
 class MultiGraph(ROOT.TMultiGraph):
@@ -56,12 +58,14 @@ class MultiGraph(ROOT.TMultiGraph):
         self.leg.SetLineColor(ROOT.kWhite)
     
         myjson = {}
-        for graph in self.graphs:
+        for i, graph in enumerate(self.graphs):
             
             if graph.function:
                 print '\n=====> Fitting %s' %graph.graph
                 fitter = Fitter(graph.graph, graph.function, colour = graph.colour)
                 graph.graph, graph.grapherror, results = fitter._fit()
+                graph.fittedfunction = dc(graph.function)
+                graph.fittedfunction.SetName(graph.fittedfunction.GetName()+'%d' %i)
                 self.graphse.append(graph.grapherror)
                 if self.json:
                     if not self.json.endswith('.json'):
@@ -81,12 +85,15 @@ class MultiGraph(ROOT.TMultiGraph):
             graphe.Draw('SAME E3')
 
         
-    def returnRatios(self):
+    def returnRatios(self, functions=False):
         '''
         '''
         references = [graph for graph in self.graphs if graph.reference == 1]
         others     = [graph for graph in self.graphs if graph.reference == 0]
-        
+
+        funcreferences = [graph.fittedfunction for graph in self.graphs if graph.reference == 1 and hasattr(graph, 'fittedfunction')]
+        funcothers     = [graph.fittedfunction for graph in self.graphs if graph.reference == 0 and hasattr(graph, 'fittedfunction')]
+                
         if len(references)>1:
             print 'ERROR! more than one reference, returning None'
             return None
@@ -95,6 +102,11 @@ class MultiGraph(ROOT.TMultiGraph):
             return None
 
         reference = references[0]
+
+        funcratios = None
+        if len(funcreferences) and len(funcothers):
+            denfunc = funcreferences[0]
+            funcratios = [FuncRatio(ff, denfunc, 20, 2000)() for ff in funcothers]
         
         ratiomg = ROOT.TMultiGraph()
 
@@ -148,7 +160,7 @@ class MultiGraph(ROOT.TMultiGraph):
             gg_new.SetMarkerStyle(8)
             ratiomg.Add(gg_new)
         
-        return ratiomg
+        return ratiomg, funcratios
         
         
         

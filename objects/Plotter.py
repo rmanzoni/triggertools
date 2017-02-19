@@ -1,13 +1,24 @@
 import ROOT
 import numpy as np
 import array as ar
+from time import time
 from itertools import product
 from copy import deepcopy as dc
 
 ROOT.gROOT.SetBatch(True)
 ROOT.TH1.SetDefaultSumw2()
 
-
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    OKBOH = '\033[96m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    
 class Plotter(object):
     '''
     '''
@@ -35,10 +46,13 @@ class Plotter(object):
         nrounds   = 1
         for j in big_loop:
             nrounds *= len(j)
-            
+        
+        t0 = time()        
         for counter, i in enumerate(myproduct):
             
-            print '=========> Processing %d / %d -th efficiency' %(counter+1, nrounds)
+            now = time()
+                        
+            print bcolors.OKGREEN + '=========> Processing %d / %d -th efficiency - (on average %.1fs / graph)' %(counter+1, nrounds, (now-t0)/(1.+float(counter))) + bcolors.ENDC
 
             variable = i[0]
 
@@ -69,7 +83,8 @@ class Plotter(object):
             self.out_file.cd()
             
             dirname = '_'.join([j for j in i[1:] if len(j)])
-            print '\t\t variable %s, selection %s' %(variable.name, dirname)
+            print bcolors.OKBLUE + '\t\t variable %s' %(variable.name) + bcolors.ENDC
+            print bcolors.OKBOH + '\t\t selection %s'%(dirname)       + bcolors.ENDC
             
             if not dirname in [i.GetName() for i in ROOT.gDirectory.GetListOfKeys()]:
                 ROOT.gDirectory.mkdir(dirname)

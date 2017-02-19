@@ -34,6 +34,7 @@ class MultiGraph(ROOT.TMultiGraph):
             file.cd()
             graph.graph = file.Get(graph.graphname)
             graph.graph.SetMarkerColor(graph.colour)
+            graph.graph.SetLineColor(graph.colour)
 
         self.legpos = kwargs['legendPosition']
 

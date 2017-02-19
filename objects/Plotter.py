@@ -1,6 +1,7 @@
 import ROOT
 import numpy as np
 import array as ar
+from time import time
 from itertools import product
 from copy import deepcopy as dc
 
@@ -35,10 +36,13 @@ class Plotter(object):
         nrounds   = 1
         for j in big_loop:
             nrounds *= len(j)
-            
+        
+        t0 = time()        
         for counter, i in enumerate(myproduct):
             
-            print '=========> Processing %d / %d -th efficiency' %(counter+1, nrounds)
+            now = time()
+                        
+            print '=========> Processing %d / %d -th efficiency - (on average %.1fs / graph)' %(counter+1, nrounds, (now-t0)/(1.+float(counter)))
 
             variable = i[0]
 

@@ -14,7 +14,6 @@ class SFReader():
     def __init__(self, file, interpolate=False):
         self.interpolate = interpolate
         self.file = ROOT.TFile.Open(file, 'read')
-        self.file.cd()
     
     def prepareGraph(self, graph):
         '''
@@ -49,9 +48,13 @@ class SFReader():
             Xedges.append(X[i]+(X[i] - Xedges[-1]))
         Xedges = np.array(Xedges)
         ibin = max(np.where(pt>=Xedges)[0])
-        y = Y[ibin-1]
-        if self.interpolate and y!=Y[-1]:
+        # allow interpolation only if it's not for the last bin
+        if self.interpolate and ibin<len(X):
             y = max(min(graph.Eval(pt), 1.), 0.)
+        elif ibin<len(X):
+            y = Y[ibin]
+        else:
+            y = Y[-1]
         return y    
     
     def _getWeight(self, isdata, tau_pt, tau_eta, tau_isocut='MediumIso', genuine=True, tau_dm=None):
@@ -114,7 +117,11 @@ if __name__ == '__main__':
         
         print 'data eff %.4f\t MC eff %.4f\t SF %.4f' %(data, mc, sf)
 
+    import sys
+    sys.exit(0)
 
+    print '========================================'
+    print '==== testing, only in my local area ===='
     print '========================================\n\n\n'
 
 
@@ -228,7 +235,6 @@ if __name__ == '__main__':
         
     h_barrel.Divide(h_barrel_norm)
     h_endcap.Divide(h_endcap_norm)
-
 
     h_barrel.Draw('colz')
     ROOT.gPad.SaveAs('tau_leg_et_barrel.pdf')
